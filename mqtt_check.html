@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Test</title>
+</head>
+<body>
+    <h1>WebSocket Test</h1>
+    <p id="message"></p>
+
+    <script>
+        const socket = new WebSocket('ws://localhost:8000/ws/some_path/');
+
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            document.getElementById('message').textContent = data.message;
+        };
+
+        socket.onopen = function() {
+            console.log('WebSocket connection opened');
+            socket.send(JSON.stringify({'message': 'Hello WebSocket Server'}));
+        };
+
+        socket.onclose = function() {
+            console.log('WebSocket connection closed');
+        };
+    </script>
+</body>
+</html>
